@@ -1,0 +1,16 @@
+trigger:
+- master
+
+pool:
+    vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: '$(configuration)'
+  solution: 'dotnet-cli-test.sln'
+  project: 'dotnet-cli-test/dotnet-cli-project.csproj'
+
+steps:
+- script: dotnet build $(solution) --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+- script: dotnet test --no-build --configuration $(buildConfiguration) --solution $(solution)
+  displayName: 'dotnet test'
